@@ -90,7 +90,7 @@ class Graph(object):
         for vertex in self.__graph_dict.values():
             vertex.adjacent = dict()
 
-    def find_all_paths(self, start, end, path=[]):
+    def find_all_paths(self, start, end, ignored, included, path=[]):
         """
         Finds all possible paths from 'start' to 'end'.
         """
@@ -101,38 +101,17 @@ class Graph(object):
             return []
         paths = []
         for node in self.__graph_dict[start].get_connections():
-            if node not in path:
-                newpaths = self.find_all_paths(node, end, path)
+            if (node not in path) and (node not in ignored):
+                newpaths = self.find_all_paths(node, end,
+                                               ignored, included, path)
                 for newpath in newpaths:
-                    paths.append(newpath)
-        return paths
-
-    def find_all_paths_except(self, start, end, ignore, path=[]):
-        """
-        Finds all possible paths from 'start' to 'end' except a given vertex.
-        """
-        path = path + [start]
-        if start == end:
-            return [path]
-        if not self.__graph_dict[start]:
-            return []
-        paths = []
-        for node in self.__graph_dict[start].get_connections():
-            if node not in path and node != ignore:
-                newpaths = self.find_all_paths_except(node, end, ignore, path)
-                for newpath in newpaths:
-                    paths.append(newpath)
-        return paths
-
-    def find_all_paths_include(self, start, end, include):
-        """
-        Finds all possible paths from 'start' to 'end'
-        going through a given vertex.
-        """
-        paths = self.find_all_paths(start, end)
-        for key, path in enumerate(paths):
-            if include not in path:
-                del paths[key]
+                    error = False
+                    for included_vertex in included:
+                        if included_vertex not in newpath:
+                            error = True
+                            break
+                    if not error:
+                        paths.append(newpath)
         return paths
 
     def find_shortest_path(self, start, end):

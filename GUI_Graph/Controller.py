@@ -64,3 +64,10 @@ class Controller():
         logging.debug("Controller.calculateShortestPath function ended\n")
         return self.model.find_shortest_path(startVertex, endVertex)
 
+    def calculateAllPaths(self, startVertex, endVertex,
+                          ignoredVertices, includedVertices):
+        logging.debug("Controller.calculateAllPaths function started")
+        logging.debug("Controller.calculateAllPaths function ended\n")
+        return self.model.find_all_paths(startVertex, endVertex,
+                                         ignoredVertices, includedVertices)
+

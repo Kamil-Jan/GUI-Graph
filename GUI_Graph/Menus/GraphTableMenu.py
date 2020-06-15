@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QLineEdit
 from GUI_Graph.Menus.PageWindow import PageWindow
 from GUI_Graph.Menus.ShortestPathMenu import ShortestPathUI
+from GUI_Graph.Menus.AllPathsMenu import AllPathsUI
 
 
 class GraphTableUI(PageWindow):
@@ -21,6 +22,7 @@ class GraphTableUI(PageWindow):
 
         self.controller = controller
         self.shortestPathUI = ShortestPathUI(self.controller)
+        self.allPathsUI = AllPathsUI(self.controller)
 
         self.__generalLayout = QGridLayout()
         self.__tableLayout = QGridLayout()
@@ -72,6 +74,7 @@ class GraphTableUI(PageWindow):
         functionsLayout.addWidget(self.shortestPathButton)
 
         self.allPathsButton = QPushButton("Find all paths")
+        self.allPathsButton.clicked.connect(self.allPathsUI.show)
         functionsLayout.addWidget(self.allPathsButton)
         self.__generalLayout.addLayout(functionsLayout, 1, 1, alignment=Qt.AlignTop)
         logging.debug("GraphTableUI.createView function ended\n")
