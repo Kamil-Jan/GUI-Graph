@@ -18,7 +18,7 @@ class VerticesInputUI(PageWindow):
     def __init__(self, controller):
         logging.debug("VerticesInputUI initialization")
         super().__init__()
-        self.setFixedSize(200, 100)
+        self.setFixedSize(285, 100)
 
         self.controller = controller
 
@@ -42,7 +42,7 @@ class VerticesInputUI(PageWindow):
 
         # Top widgets.
         self.verticesInputLine = QLineEdit()
-        self.verticesInputLine.setFixedHeight(25)
+        self.verticesInputLine.setFixedSize(200, 25)
         self.verticesInputLine.textChanged.connect(self.__clearErrorInfo)
         verticesFormLayout.addRow("Vertices: ", self.verticesInputLine)
         self.__generalLayout.addLayout(verticesFormLayout)
