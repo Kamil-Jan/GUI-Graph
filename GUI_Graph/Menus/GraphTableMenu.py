@@ -10,7 +10,8 @@ from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QLineEdit
-from PageWindow import PageWindow
+from GUI_Graph.Menus.PageWindow import PageWindow
+from GUI_Graph.Menus.ShortestPathMenu import ShortestPathUI
 
 
 class GraphTableUI(PageWindow):
@@ -19,6 +20,7 @@ class GraphTableUI(PageWindow):
         super().__init__()
 
         self.controller = controller
+        self.shortestPathUI = ShortestPathUI(self.controller)
 
         self.__generalLayout = QGridLayout()
         self.__tableLayout = QGridLayout()
@@ -50,24 +52,27 @@ class GraphTableUI(PageWindow):
         self.OkButton = QPushButton("Ok")
         self.OkButton.setFixedWidth(40)
         self.OkButton.clicked.connect(self.generateGraphEdges)
-        bottomLayout.addWidget(self.OkButton, Qt.AlignLeft)
+        bottomLayout.addWidget(self.OkButton)
 
         self.clearButton = QPushButton("Clear")
         self.clearButton.setFixedWidth(40)
         self.clearButton.clicked.connect(self.clearTable)
-        bottomLayout.addWidget(self.clearButton, Qt.AlignLeft)
+        bottomLayout.addWidget(self.clearButton)
 
         self.drawButton = QPushButton("Draw")
         self.drawButton.setFixedWidth(40)
-        bottomLayout.addWidget(self.drawButton, Qt.AlignLeft)
+        self.drawButton.clicked.connect(self.controller.drawGraph)
+        bottomLayout.addWidget(self.drawButton)
         self.__generalLayout.addLayout(bottomLayout, 2, 0, alignment=Qt.AlignLeft)
 
         functionsLayout = QVBoxLayout()
-        self.shortestPathButton = QPushButton("Find\nshortest path")
-        functionsLayout.addWidget(self.shortestPathButton, Qt.AlignTop)
+        functionsLayout.addWidget(QLabel(""))
+        self.shortestPathButton = QPushButton("Find the\nshortest path")
+        self.shortestPathButton.clicked.connect(self.shortestPathUI.show)
+        functionsLayout.addWidget(self.shortestPathButton)
 
         self.allPathsButton = QPushButton("Find all paths")
-        functionsLayout.addWidget(self.allPathsButton, Qt.AlignTop)
+        functionsLayout.addWidget(self.allPathsButton)
         self.__generalLayout.addLayout(functionsLayout, 1, 1, alignment=Qt.AlignTop)
         logging.debug("GraphTableUI.createView function ended\n")
 
@@ -76,7 +81,7 @@ class GraphTableUI(PageWindow):
         Generates Table depending on numbers of vertices.
         """
         logging.debug("GraphTableUI.createTable function started")
-        self.vertices = self.controller.model.vertices()
+        self.vertices = self.controller.getVertices()
         self.cellsDict = dict()
         verticesNum = len(self.vertices)
         for rowNum in range(1, verticesNum + 1):
@@ -170,7 +175,7 @@ class GraphTableUI(PageWindow):
         logging.debug("GraphTableUI.gotoVerticesInputMenu function started")
         self.getEdgesList()
         self.removeTable()
-        self.controller.model.delete_vertices()
+        self.controller.deleteVertices()
         self.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.goto("VerticesInput")
         logging.debug("GraphTableUI.gotoVerticesInputMenu function ended\n")

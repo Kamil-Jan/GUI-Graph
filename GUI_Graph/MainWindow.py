@@ -4,9 +4,9 @@ from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QStackedWidget
-from PageWindow import PageWindow
-from VerticesInputMenu import VerticesInputUI
-from GraphTableMenu import GraphTableUI
+from GUI_Graph.Menus.PageWindow import PageWindow
+from GUI_Graph.Menus.VerticesInputMenu import VerticesInputUI
+from GUI_Graph.Menus.GraphTableMenu import GraphTableUI
 
 
 class MainWindow(QMainWindow):
@@ -20,6 +20,7 @@ class MainWindow(QMainWindow):
         self.stackedWidget = QStackedWidget()
         self.setCentralWidget(self.stackedWidget)
         self.setWindowTitle("GUI Graph")
+        self.setFixedSize(self.minimumSizeHint())
 
         self.pages = dict()
         self.register(GraphTableUI(self.controller), "GraphTable")

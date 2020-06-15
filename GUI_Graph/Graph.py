@@ -1,6 +1,8 @@
 import random
-from Heap import MinHeap
+import networkx as nx
+from matplotlib.pyplot import show
 from collections import deque
+from GUI_Graph.Heap import MinHeap
 
 
 class Vertex(object):
@@ -202,6 +204,21 @@ class Graph(object):
             path.appendleft(cur_vertex)
             cur_vertex = distances[cur_vertex][1]
         return list(path), distances[end][0]
+
+    def draw(self):
+        if self.directed:
+            G = nx.DiGraph()
+        else:
+            G = nx.Graph()
+        edge_labels = self.edges()
+        edges = list(edge_labels.keys())
+        G.add_edges_from(edges)
+
+        layout = nx.spring_layout(G)
+        nx.draw(G, layout)
+        nx.draw_networkx_labels(G, pos=layout, font_color="white")
+        nx.draw_networkx_edge_labels(G, pos=layout, edge_labels=edge_labels)
+        show()
 
     def __generate_dict(self, graph_dict):
         """

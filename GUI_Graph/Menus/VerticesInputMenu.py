@@ -1,6 +1,6 @@
 import re
 import logging
-from PageWindow import PageWindow
+from GUI_Graph.Menus.PageWindow import PageWindow
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QSizePolicy
@@ -106,7 +106,7 @@ class VerticesInputUI(PageWindow):
         verticesList = self.getVerticesList()
         if verticesList:
             logging.debug("VerticesInputUI.gotoTableUI function started")
-            self.controller.model.directed = self.isDirected()
+            self.controller.setDirected(self.isDirected())
             self.controller.addVerticesToGraph(verticesList)
             self.clearDisplay()
             self.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)

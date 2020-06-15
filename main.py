@@ -1,10 +1,9 @@
 import sys
 import logging
 from PyQt5.QtWidgets import QApplication
-from MainWindow import MainWindow
-from VerticesInputMenu import VerticesInputUI
-from Controller import Controller
-from Graph import Graph
+from GUI_Graph.MainWindow import MainWindow
+from GUI_Graph.Controller import Controller
+from GUI_Graph.Graph import Graph
 
 
 def main():
