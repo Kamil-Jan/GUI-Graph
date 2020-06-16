@@ -3,6 +3,7 @@ import logging
 from GUI_Graph.Menus.PageWindow import PageWindow
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QSize
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QFormLayout
@@ -113,6 +114,10 @@ class VerticesInputUI(PageWindow):
             self.goto("GraphTable")
             logging.debug("VerticesInputUI.gotoTableUI function ended\n")
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return:
+            self.gotoTableUI()
+
     def __clearErrorInfo(self):
         self.verticesInputLine.setStyleSheet("""font: bold;
                                                 font-size: 10pt;
@@ -121,6 +126,9 @@ class VerticesInputUI(PageWindow):
         self.__errorLabel.setText("")
 
     def __drawErrorInfo(self):
-        self.verticesInputLine.setStyleSheet("border: 1px solid red;")
+        self.verticesInputLine.setStyleSheet("""border: 1px solid red;
+                                                font-size: 10pt;
+                                                font-family: Arial
+                                                """)
         self.__errorLabel.setText("Invalid input!")
 

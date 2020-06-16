@@ -1,6 +1,6 @@
 import random
 import networkx as nx
-from matplotlib.pyplot import show
+from matplotlib.pyplot import show, clf
 from collections import deque
 from GUI_Graph.Heap import MinHeap
 
@@ -185,6 +185,7 @@ class Graph(object):
         return list(path), distances[end][0]
 
     def draw(self):
+        clf()
         if self.directed:
             G = nx.DiGraph()
         else:

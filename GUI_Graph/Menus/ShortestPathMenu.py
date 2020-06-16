@@ -102,8 +102,14 @@ class ShortestPathUI(QMainWindow):
         self.__clearErrorInfo(self.fromLineEdit)
         self.__clearErrorInfo(self.toLineEdit)
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return:
+            self.updatePath()
+
     def __drawErrorInfo(self, widget):
-        widget.setStyleSheet("border: 1px solid red;")
+        widget.setStyleSheet("""border: 1px solid red;
+                                font-size: 10pt;
+                                font-family: Arial""")
 
     def __clearErrorInfo(self, widget):
         widget.setStyleSheet("""font: bold;

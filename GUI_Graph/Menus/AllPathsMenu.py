@@ -155,8 +155,14 @@ class AllPathsUI(QMainWindow):
         self.__clearErrorInfo(self.ignoreLineEdit)
         self.__clearErrorInfo(self.includeLineEdit)
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return:
+            self.updatePaths()
+
     def __drawErrorInfo(self, widget):
-        widget.setStyleSheet("border: 1px solid red;")
+        widget.setStyleSheet("""border: 1px solid red;
+                                font-size: 10pt;
+                                font-family: Arial""")
 
     def __clearErrorInfo(self, widget):
         widget.setStyleSheet("""font: bold;

@@ -1,4 +1,5 @@
 import logging
+from functools import partial
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QSizePolicy
@@ -100,6 +101,8 @@ class GraphTableUI(PageWindow):
                     self.cellsDict[(rowNum, 0)] = vertexRowLabel
                 lineEdit = QLineEdit()
                 lineEdit.setFixedWidth(30)
+                lineEdit.textChanged.connect(partial(self.__clearErrorInfo,
+                                                     lineEdit, (rowNum, colNum)))
                 lineEdit.setStyleSheet("""font: bold;
                                           font-size: 10pt;
                                           font-family: Arial""")
@@ -183,8 +186,14 @@ class GraphTableUI(PageWindow):
         self.goto("VerticesInput")
         logging.debug("GraphTableUI.gotoVerticesInputMenu function ended\n")
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return:
+            self.generateGraphEdges()
+
     def __drawErrorInfo(self, widget):
-        widget.setStyleSheet("border: 1px solid red;")
+        widget.setStyleSheet("""border: 1px solid red;
+                                font-size: 10pt;
+                                font-family: Arial""")
 
     def __clearErrorInfo(self, widget, gridPlace):
         if gridPlace[0] != gridPlace[1]:
