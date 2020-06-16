@@ -105,38 +105,16 @@ class AllPathsUI(QMainWindow):
             self.__drawErrorInfo(self.toLineEdit)
             error = True
 
-        ignoredVertices = self.ignoreLineEdit.text()
-        if not ignoredVertices:
-            ignoredVertices = []
-        else:
-            ignoredVertices = re.sub(r"\s", "", ignoredVertices)
-            ignoredVertices = ignoredVertices.split(",")
-            for ignoredVertex in ignoredVertices:
-                if ignoredVertex == "":
-                    self.__drawErrorInfo(self.ignoreLineEdit)
-                    error = True
-                    break
-                if ignoredVertex not in verticesList:
-                    self.__drawErrorInfo(self.ignoreLineEdit)
-                    error = True
-                    break
-
-        includedVertices = self.includeLineEdit.text()
-        if not includedVertices:
-            includedVertices = []
-        else:
-            includedVertices = self.includeLineEdit.text()
-            includedVertices = re.sub(r"\s", "", includedVertices)
-            includedVertices = includedVertices.split(",")
-            for includedVertex in includedVertices:
-                if includedVertex == "":
-                    self.__drawErrorInfo(self.includeLineEdit)
-                    error = True
-                    break
-                if includedVertex not in verticesList:
-                    self.__drawErrorInfo(self.includeLineEdit)
-                    error = True
-                    break
+        ignoredVertices = self.__extractText(self.ignoreLineEdit,
+                                             self.ignoreLineEdit.text(),
+                                             verticesList)
+        includedVertices = self.__extractText(self.includeLineEdit,
+                                              self.includeLineEdit.text(),
+                                              verticesList)
+        if ignoredVertices == None:
+            error = True
+        if includedVertices == None:
+            error = True
 
         if not error:
             paths = self.controller.calculateAllPaths(fromVertex, toVertex,
@@ -158,6 +136,21 @@ class AllPathsUI(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Return:
             self.updatePaths()
+
+    def __extractText(self, widget, text, verticesList):
+        if not text:
+            return []
+        else:
+            text = re.sub(r"\s", "", text)
+            text = text.split(",")
+            for elem in text:
+                if elem == "":
+                    self.__drawErrorInfo(widget)
+                    return
+                if elem not in verticesList:
+                    self.__drawErrorInfo(widget)
+                    return
+            return text
 
     def __drawErrorInfo(self, widget):
         widget.setStyleSheet("""border: 1px solid red;
