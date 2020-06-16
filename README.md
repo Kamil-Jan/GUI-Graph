@@ -12,5 +12,5 @@ pip install -r requirements.txt
 ```
 
 ### Usage
-Open main.py. Enter the vertices separated by commas, click "Ok", then fill the table
+Open main.py. Enter the vertices separated by commas, click "Ok" or press "Enter", then fill the table
 
