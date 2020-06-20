@@ -6,7 +6,6 @@ class Controller():
         logging.debug("Controller initialization")
         self.view = None
         self.model = model
-        self.isGraphDirected = False
 
     def addVerticesToGraph(self, verticesList):
         """
@@ -25,6 +24,9 @@ class Controller():
         return self.model.vertices()
 
     def deleteVertices(self):
+        """
+        Deletes vertices from Graph.
+        """
         logging.debug("Controller.deleteVertices function started")
         self.model.delete_vertices()
         logging.debug("Controller.deleteVertices function ended\n")
@@ -49,7 +51,7 @@ class Controller():
 
     def drawGraph(self):
         """
-        Draws Graph.
+        Draws a Graph.
         """
         logging.debug("Controller.drawGraph function started")
         self.model.draw()
@@ -66,6 +68,10 @@ class Controller():
 
     def calculateAllPaths(self, startVertex, endVertex,
                           ignoredVertices, includedVertices):
+        """
+        Calculates all paths from
+        startVertex to endVertex.
+        """
         logging.debug("Controller.calculateAllPaths function started")
         logging.debug("Controller.calculateAllPaths function ended\n")
         return self.model.find_all_paths(startVertex, endVertex,

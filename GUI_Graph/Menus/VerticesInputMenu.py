@@ -68,6 +68,10 @@ class VerticesInputUI(PageWindow):
         logging.debug("VerticesInputUI.createView function ended\n")
 
     def clearDisplay(self):
+        """
+        Clears text from Line Edit and unchecks
+        Radio button.
+        """
         logging.debug("VerticesInputUI.clearDisplay function started")
         self.verticesInputLine.setText("")
         self.isDirectedRButton.setChecked(False)
@@ -77,6 +81,10 @@ class VerticesInputUI(PageWindow):
         pass
 
     def isDirected(self):
+        """
+        Returns boolean value which tells
+        whether a graph directed or not.
+        """
         logging.debug("VerticesInputUI.isDirected function started")
         logging.debug(f"isDirected = {self.isDirectedRButton.isChecked()}")
         logging.debug("VerticesInputUI.isDirected function ended\n")

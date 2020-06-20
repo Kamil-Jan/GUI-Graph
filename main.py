@@ -9,7 +9,7 @@ from GUI_Graph.Graph import Graph
 def main():
     loggingFormat = "%(asctime)s - %(levelname)s - %(message)s"
     logging.basicConfig(format=loggingFormat, level=logging.CRITICAL)
-    app = QApplication([])
+    app = QApplication(sys.argv)
     model = Graph()
     controller = Controller(model=model)
     mainWindow = MainWindow(controller)

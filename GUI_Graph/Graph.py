@@ -1,4 +1,3 @@
-import random
 import networkx as nx
 from matplotlib.pyplot import show, clf
 from collections import deque
@@ -121,7 +120,7 @@ class Graph(object):
         negative weight edges.
         """
         inf = float("inf")
-        # Function with compares distances of two Vertices.
+        # Function which compares distances of two Vertices.
         com_func = lambda x, y: distances[x.id][0] < distances[y.id][0]
 
         # Creates dictionary which contains vertex's distance and previous
@@ -226,15 +225,6 @@ class Graph(object):
             for neighbour, w in self.__graph_dict[vertex].get_weighted_connections():
                 edges[(vertex, neighbour)] = w
         return edges
-
-    def __str__(self):
-        res = "vertices: "
-        for k in self.__graph_dict:
-            res += f"{k} "
-        res += "\nedges: "
-        for edge in self.__generate_edges():
-            res += f"{edge} "
-        return res
 
 
 def main():

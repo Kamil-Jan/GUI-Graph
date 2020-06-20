@@ -128,6 +128,9 @@ class GraphTableUI(PageWindow):
         logging.debug("GraphTableUI.removeTable function ended\n")
 
     def clearTable(self):
+        """
+        Clears a Table.
+        """
         logging.debug("GraphTableUI.clearTable function started")
         for widget in self.cellsDict.values():
             if isinstance(widget, QLineEdit):
@@ -135,6 +138,9 @@ class GraphTableUI(PageWindow):
         logging.debug("GraphTableUI.clearTable function ended\n")
 
     def createDisplay(self):
+        """
+        Creates a Table after going to Graph Table page.
+        """
         logging.debug("GraphTableUI.createDisplay function started")
         self.createTable()
         logging.debug("GraphTableUI.createDisplay function ended\n")

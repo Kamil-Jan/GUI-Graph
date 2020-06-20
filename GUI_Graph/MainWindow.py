@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
 
     def register(self, page, pageName: str):
         """
-        Connects gotoSignal of page with self.goto.
+        Connects gotoSignal of a page with self.goto.
         """
         self.pages[pageName] = page
         self.stackedWidget.addWidget(page)
@@ -38,6 +38,9 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot(str)
     def goto(self, pageName: str):
+        """
+        Changes current page.
+        """
         if pageName in self.pages:
             page = self.pages[pageName]
             page.createDisplay()
