@@ -12,16 +12,17 @@ from PyQt5.QtWidgets import QLabel
 
 
 class ShortestPathUI(QMainWindow):
-    def __init__(self, controller):
+    def __init__(self, controller, width, height, fontSize):
         logging.debug("ShortestPathUI initialization")
         super().__init__()
         self.setWindowTitle("Find the shortest path")
 
         self.controller = controller
         self.__generalLayout = QGridLayout()
-        self.setFixedSize(300, 120)
+        self.setFixedSize(width, height)
 
-        layoutFont = QFont("Arial", 10, QFont.Bold)
+        self.fontSize = fontSize
+        layoutFont = QFont("Arial", self.fontSize, QFont.Bold)
         self.__centralWidget = QWidget()
         self.__centralWidget.setFont(layoutFont)
         self.__centralWidget.setLayout(self.__generalLayout)
@@ -107,12 +108,12 @@ class ShortestPathUI(QMainWindow):
             self.updatePath()
 
     def __drawErrorInfo(self, widget):
-        widget.setStyleSheet("""border: 1px solid red;
-                                font-size: 10pt;
-                                font-family: Arial""")
+        widget.setStyleSheet(f"""border: 1px solid red;
+                                 font-size: {self.fontSize}pt;
+                                 font-family: Arial""")
 
     def __clearErrorInfo(self, widget):
-        widget.setStyleSheet("""font: bold;
-                                font-size: 10pt;
-                                font-family: Arial""")
+        widget.setStyleSheet(f"""font: bold;
+                                 font-size: {self.fontSize}pt;
+                                 font-family: Arial""")
 

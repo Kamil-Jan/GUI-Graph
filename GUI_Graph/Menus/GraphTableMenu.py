@@ -17,53 +17,54 @@ from GUI_Graph.Menus.AllPathsMenu import AllPathsUI
 
 
 class GraphTableUI(PageWindow):
-    def __init__(self, controller):
+    def __init__(self, controller, fontSize):
         logging.debug("GraphTableUI initialization")
         super().__init__()
 
         self.controller = controller
-        self.shortestPathUI = ShortestPathUI(self.controller)
-        self.allPathsUI = AllPathsUI(self.controller)
+        self.shortestPathUI = ShortestPathUI(self.controller, 350, 120, fontSize=fontSize)
+        self.allPathsUI = AllPathsUI(self.controller, 400, 250, fontSize=fontSize)
 
         self.__generalLayout = QGridLayout()
         self.__tableLayout = QGridLayout()
         self.__generalLayout.addLayout(self.__tableLayout, 1, 0)
 
-        layoutFont = QFont("Arial", 10, QFont.Bold)
+        self.fontSize = fontSize
+        layoutFont = QFont("Arial", self.fontSize, QFont.Bold)
         self.__centralWidget = QWidget()
         self.__centralWidget.setFont(layoutFont)
         self.__centralWidget.setLayout(self.__generalLayout)
         self.setCentralWidget(self.__centralWidget)
 
-        self.createView()
-        self.createTable()
+        self.createView(buttonsWidth=50)
+        self.createTable(lineEditWidth=40)
         self.__generalLayout.setSizeConstraint(self.__tableLayout.SetFixedSize)
         self.__centralWidget.adjustSize()
         self.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
 
-    def createView(self):
+    def createView(self, buttonsWidth):
         """
         Creates widgets of GraphTableUI.
         """
         logging.debug("GraphTableUI.createView function started")
         self.backButton = QPushButton("Back")
-        self.backButton.setFixedWidth(40)
+        self.backButton.setFixedWidth(buttonsWidth)
         self.backButton.clicked.connect(self.gotoVerticesInputMenu)
         self.__generalLayout.addWidget(self.backButton, 0, 0)
 
         bottomLayout = QHBoxLayout()
         self.OkButton = QPushButton("Ok")
-        self.OkButton.setFixedWidth(40)
+        self.OkButton.setFixedWidth(buttonsWidth)
         self.OkButton.clicked.connect(self.generateGraphEdges)
         bottomLayout.addWidget(self.OkButton)
 
         self.clearButton = QPushButton("Clear")
-        self.clearButton.setFixedWidth(40)
+        self.clearButton.setFixedWidth(buttonsWidth)
         self.clearButton.clicked.connect(self.clearTable)
         bottomLayout.addWidget(self.clearButton)
 
         self.drawButton = QPushButton("Draw")
-        self.drawButton.setFixedWidth(40)
+        self.drawButton.setFixedWidth(buttonsWidth)
         self.drawButton.clicked.connect(self.controller.drawGraph)
         bottomLayout.addWidget(self.drawButton)
         self.__generalLayout.addLayout(bottomLayout, 2, 0, alignment=Qt.AlignLeft)
@@ -80,7 +81,7 @@ class GraphTableUI(PageWindow):
         self.__generalLayout.addLayout(functionsLayout, 1, 1, alignment=Qt.AlignTop)
         logging.debug("GraphTableUI.createView function ended\n")
 
-    def createTable(self):
+    def createTable(self, lineEditWidth):
         """
         Generates Table depending on numbers of vertices.
         """
@@ -100,11 +101,11 @@ class GraphTableUI(PageWindow):
                     self.cellsDict[(0, rowNum)] = vertexColLabel
                     self.cellsDict[(rowNum, 0)] = vertexRowLabel
                 lineEdit = QLineEdit()
-                lineEdit.setFixedWidth(30)
+                lineEdit.setFixedWidth(lineEditWidth)
                 lineEdit.textChanged.connect(partial(self.__clearErrorInfo,
                                                      lineEdit, (rowNum, colNum)))
                 lineEdit.setStyleSheet("""font: bold;
-                                          font-size: 10pt;
+                                          font-size: {self.fontSize}pt;
                                           font-family: Arial""")
                 if rowNum == colNum:
                     lineEdit.setReadOnly(True)
@@ -142,7 +143,7 @@ class GraphTableUI(PageWindow):
         Creates a Table after going to Graph Table page.
         """
         logging.debug("GraphTableUI.createDisplay function started")
-        self.createTable()
+        self.createTable(lineEditWidth=40)
         logging.debug("GraphTableUI.createDisplay function ended\n")
 
     def getEdgesList(self):
@@ -197,13 +198,13 @@ class GraphTableUI(PageWindow):
             self.generateGraphEdges()
 
     def __drawErrorInfo(self, widget):
-        widget.setStyleSheet("""border: 1px solid red;
-                                font-size: 10pt;
-                                font-family: Arial""")
+        widget.setStyleSheet(f"""border: 1px solid red;
+                                 font-size: {self.fontSize}pt;
+                                 font-family: Arial""")
 
     def __clearErrorInfo(self, widget, gridPlace):
         if gridPlace[0] != gridPlace[1]:
-            widget.setStyleSheet("""font: bold;
-                                    font-size: 10pt;
-                                    font-family: Arial""")
+            widget.setStyleSheet(f"""font: bold;
+                                     font-size: {self.fontSize}pt;
+                                     font-family: Arial""")
 

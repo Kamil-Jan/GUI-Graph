@@ -23,8 +23,11 @@ class MainWindow(QMainWindow):
         self.setFixedSize(self.minimumSizeHint())
 
         self.pages = dict()
-        self.register(GraphTableUI(self.controller), "GraphTable")
-        self.register(VerticesInputUI(self.controller), "VerticesInput")
+        verticesInput = VerticesInputUI(self.controller, 300, 115, fontSize=9)
+        graphTable = GraphTableUI(self.controller, fontSize=9)
+
+        self.register(graphTable, "GraphTable")
+        self.register(verticesInput, "VerticesInput")
         self.goto("VerticesInput")
 
     def register(self, page, pageName: str):

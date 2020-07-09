@@ -16,24 +16,25 @@ from PyQt5.QtWidgets import QLabel
 
 
 class VerticesInputUI(PageWindow):
-    def __init__(self, controller):
+    def __init__(self, controller, width, height, fontSize):
         logging.debug("VerticesInputUI initialization")
         super().__init__()
-        self.setFixedSize(285, 100)
+        self.setFixedSize(width, height)
 
         self.controller = controller
 
-        layoutFont = QFont("Arial", 10, QFont.Bold)
+        self.fontSize = fontSize
+        layoutFont = QFont("Arial", self.fontSize, QFont.Bold)
         self.__generalLayout = QVBoxLayout()
         self.__centralWidget = QWidget(self)
         self.__centralWidget.setLayout(self.__generalLayout)
         self.__centralWidget.setFont(layoutFont)
         self.setCentralWidget(self.__centralWidget)
 
-        self.createView()
+        self.createView(buttonWidth=50)
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
 
-    def createView(self):
+    def createView(self, buttonWidth):
         """
         Creates widgets of VerticesInputUI.
         """
@@ -43,7 +44,6 @@ class VerticesInputUI(PageWindow):
 
         # Top widgets.
         self.verticesInputLine = QLineEdit()
-        self.verticesInputLine.setFixedSize(200, 25)
         self.verticesInputLine.textChanged.connect(self.__clearErrorInfo)
         verticesFormLayout.addRow("Vertices: ", self.verticesInputLine)
         self.__generalLayout.addLayout(verticesFormLayout)
@@ -56,12 +56,12 @@ class VerticesInputUI(PageWindow):
         self.__errorLabel = QLabel("")
         self.__errorLabel.setStyleSheet("""color: red;
                                            font: bold;
-                                           font-size: 10pt;
+                                           font-size: {self.fontSize}pt;
                                            font-family: Arial""")
         bottomLayout.addWidget(self.__errorLabel)
 
         self.OkButton = QPushButton("Ok")
-        self.OkButton.setFixedWidth(50)
+        self.OkButton.setFixedWidth(buttonWidth)
         self.OkButton.clicked.connect(self.gotoTableUI)
         bottomLayout.addWidget(self.OkButton)
         self.__generalLayout.addLayout(bottomLayout)
@@ -127,16 +127,16 @@ class VerticesInputUI(PageWindow):
             self.gotoTableUI()
 
     def __clearErrorInfo(self):
-        self.verticesInputLine.setStyleSheet("""font: bold;
-                                                font-size: 10pt;
-                                                font-family: Arial
-                                                """)
+        self.verticesInputLine.setStyleSheet(f"""font: bold;
+                                                 font-size: {self.fontSize}pt;
+                                                 font-family: Arial
+                                                 """)
         self.__errorLabel.setText("")
 
     def __drawErrorInfo(self):
-        self.verticesInputLine.setStyleSheet("""border: 1px solid red;
-                                                font-size: 10pt;
-                                                font-family: Arial
-                                                """)
+        self.verticesInputLine.setStyleSheet(f"""border: 1px solid red;
+                                                 font-size: {self.fontSize}pt;
+                                                 font-family: Arial
+                                                 """)
         self.__errorLabel.setText("Invalid input!")
 
