@@ -2,13 +2,16 @@
 
 ### Screenshots:
 Vertices Input Menu
-![](screenshots/verticesInput.PNG)
+![](https://github.com/Kamil-Jan/GUI-Graph/tree/master/screenshots/verticesInput.PNG)
+
 Table
-![](screenshots/table.PNG)
+![](https://github.com/Kamil-Jan/GUI-Graph/tree/master/screenshots/table.PNG)
+
 Find the shortes path menu
-![](screenshots/shortestPath.PNG)
+![](https://github.com/Kamil-Jan/GUI-Graph/tree/master/screenshots/shortestPath.PNG)
+
 Find all paths menu
-![](screenshots/allPaths.PNG)
+![](https://github.com/Kamil-Jan/GUI-Graph/tree/master/screenshots/allPaths.PNG)
 
 ### Requirements:
 * python 3
