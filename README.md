@@ -1,5 +1,11 @@
 # GUI Graph
 
+### Screenshots:
+![Vertices Input Menu](screenshots/verticesInput.PNG)
+![Table](screenshots/table.PNG)
+![Find the shortest path Menu](screenshots/shortestPath.PNG)
+![Find all paths Menu](screenshots/allPaths.PNG)
+
 ### Requirements:
 * python 3
 
